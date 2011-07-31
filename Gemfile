@@ -12,4 +12,5 @@ end
 group :test do
   gem 'rspec'
   gem 'webrat'
+  gem 'machinist', '>= 2.0.0.beta2'
 end

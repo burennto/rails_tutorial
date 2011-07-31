@@ -7,6 +7,10 @@ require 'rspec/rails'
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
+Machinist.configure do |config|
+  config.cache_objects = false
+end
+
 RSpec.configure do |config|
   # == Mock Framework
   #
@@ -24,4 +28,6 @@ RSpec.configure do |config|
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = true
+  
+  config.before(:each) { Machinist.reset_before_test }
 end
