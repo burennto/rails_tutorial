@@ -30,4 +30,8 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = true
   
   config.before(:each) { Machinist.reset_before_test }
+  
+  def test_sign_in(user)
+    controller.sign_in(user)
+  end
 end
