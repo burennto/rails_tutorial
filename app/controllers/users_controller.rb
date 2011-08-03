@@ -58,6 +58,9 @@ class UsersController < ApplicationController
     
     def admin_user
       @user = User.find(params[:id])
-      redirect_to root_path if !current_user.admin? || current_user?(@user)
+      if !current_user.admin? || current_user?(@user)
+        flash[:notice] = "Admin users are not allowed to delete themselves."
+        redirect_to root_path 
+      end
     end
 end

@@ -341,6 +341,7 @@ describe UsersController do
         lambda do
           delete :destroy, :id => @admin
         end.should_not change(User, :count)
+        flash[:notice].should =~ /not allowed/i
       end
     end
   end
