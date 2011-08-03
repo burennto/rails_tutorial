@@ -6,3 +6,8 @@ User.blueprint do
   password              { "foobar" }
   password_confirmation { "foobar" }
 end
+
+Micropost.blueprint do
+  content { "Foo bar" }
+  user
+end
