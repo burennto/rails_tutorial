@@ -100,6 +100,26 @@ describe UsersController do
       get :show, :id => @user
       response.should have_selector('td>a', :content => user_path(@user), :href => user_path(@user))
     end
+    
+    it "should show the user's microposts" do
+      mp1 = Micropost.make!(:user => @user, :content => "Foo bar")
+      mp2 = Micropost.make!(:user => @user, :content => "Baz quux")
+      get :show, :id => @user
+      response.should have_selector('span.content', :content => mp1.content)
+      response.should have_selector('span.content', :content => mp2.content)
+    end
+    
+    it "should paginate microposts" do
+      35.times { Micropost.make!(:user => @user, :content => "Foo bar") }
+      get :show, :id => @user
+      response.should have_selector('div.pagination')
+    end
+    
+    it "should display the micropost count" do
+      10.times { Micropost.make!(:user => @user, :content => "Foo bar") }
+      get :show, :id => @user
+      response.should have_selector('td.sidebar', :content => @user.microposts.count.to_s)
+    end
   end
   
   describe "GET 'new'" do
