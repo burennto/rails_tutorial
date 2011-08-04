@@ -10,9 +10,15 @@ RailsTutorial::Application.routes.draw do
   match "/signin",  :to => 'sessions#new'
   match "/signout", :to => 'sessions#destroy'
   
-  resources :users
-  resources :sessions,   :only => [ :new, :create, :destroy ]
-  resources :microposts, :only => [ :create, :destroy ]
+  resources :users do
+    member do
+      get :following, :followers
+    end
+  end
+  
+  resources :sessions,      :only => [ :new, :create, :destroy ]
+  resources :microposts,    :only => [ :create, :destroy ]
+  resources :relationships, :only => [ :create, :destroy ]
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
