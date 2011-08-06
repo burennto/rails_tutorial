@@ -209,6 +209,13 @@ describe User do
         mp3 = Micropost.make!(:user => User.make!)
         @user.feed.should_not include(mp3)
       end
+      
+      it "should include the microposts of followed users" do
+        followed = User.make!
+        mp3 = Micropost.make!(:user => followed)
+        @user.follow!(followed)
+        @user.feed.should include(mp3)
+      end
     end
   end
 
